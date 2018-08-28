@@ -1,0 +1,24 @@
+<div class="page py-1 px-3">
+    <app-page-header></app-page-header>
+    <h3>Animation Basics</h3>
+    <br>
+    <h5 class="mb-3">State and Transitions - basic</h5>
+    <div class="text-center">
+        <button class="btn" [@btn1Trigger]="btn1State" (click)="changeBtn1State()">My Button 1</button>
+    </div>
+
+    <br>
+    <h5 class="mb-4">State and Transitions - Wildcard</h5>
+    <div class="text-center">
+        <button class="btn" [@btn2Trigger]="btn2State" (click)="changeBtn2State()">My Button 2</button>
+    </div>
+
+    <br>
+    <h5 class="mb-4">State and Transitions - Void</h5>
+    <div class="mb-2">
+        <button class="btn" (click)="changeList1State()">Add Item</button>
+    </div>
+    <ul>
+        <li *ngFor="let item of items" [@list1Trigger]="list1State">{{item}}</li>
+    </ul>
+</div>

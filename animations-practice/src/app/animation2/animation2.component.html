@@ -1,0 +1,27 @@
+<div class="page py-1 px-4">
+    <app-page-header></app-page-header>
+    <h3>Advanced Animations</h3>
+    <br>
+    <h5 class="mb-4">Animation timings</h5>
+    <div class="mb-2">
+        <button class="btn btn-default" (click)="changeList1State()">Add Item</button>
+    </div>
+    <ul class="list1" style="list-style-type: none;" class="mt-4 mr-4 mb-0 ml-0 p-0">
+        <li *ngFor="let item of items1" [@list1Trigger]="list1State" class="w-100 p-2 bg-primary text-white mb-2 font-weight-bold">
+            {{item}}
+        </li>
+    </ul>
+
+    <br>
+    <h5 class="mb-4">Multistep Animation, Animation Callbacks & Multiple Animations</h5>
+    <div class="mb-2">
+        <button class="btn" (click)="changeList2State()">Add Item</button>
+    </div>
+    <div class="mb-2 text-primary" [@textTrigger]="textState">{{ animDetails }}</div>
+    <ul class="list2" style="list-style-type: none;" class="mt-4 mr-4 mb-0 ml-0 p-0">
+        <li *ngFor="let item of items2" [@list2Trigger]="list2State" (@list2Trigger.start)="animStart($event)" (@list2Trigger.done)="animDone($event)"
+            class="w-100 p-2 bg-primary mb-2 font-weight-bold text-white">
+            {{item}}
+        </li>
+    </ul>
+</div>
