@@ -12,17 +12,22 @@ import { InMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { InMemoryStoryService } from '../api/in-memory-story.service';
 import { AppRoutingModule } from './app-routing.module';
 
-import { RouterModule } from '@angular/router';
 import { FilterTextComponent, FilterService } from './blocks/filter-text';
 import { ToastComponent, ToastService } from './blocks/toast';
 import { SpinnerComponent, SpinnerService } from './blocks/spinner';
 import { ModalComponent, ModalService } from './blocks/modal';
 import { ExceptionService } from './blocks/exception.service';
 
-import { NgReduxModule, NgRedux } from '@angular-redux/store';
-import { IAppState, store } from './store';
+import {
+  NgReduxModule,
+  NgRedux,
+  DevToolsExtension
+} from '@angular-redux/store';
+import { IAppState, reducer, initialState } from './store';
 
 import { CourseActions } from './courses/course.action';
+import { createLogger } from 'redux-logger';
+import freezeState from './store/freezeState';
 
 @NgModule({
   declarations: [
@@ -54,7 +59,12 @@ import { CourseActions } from './courses/course.action';
   bootstrap: [AppComponent]
 })
 export class AppModule {
-  constructor(ngRedux: NgRedux<IAppState>) {
-    ngRedux.provideStore(store);
+  constructor(ngRedux: NgRedux<IAppState>, devTools: DevToolsExtension) {
+    ngRedux.configureStore(
+      reducer,
+      initialState,
+      [createLogger(), freezeState],
+      devTools.isEnabled() ? [devTools.enhancer()] : []
+    );
   }
 }

@@ -4,84 +4,60 @@ import { Course } from './course';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastService } from '../blocks/toast';
 import { ModalService } from '../blocks/modal';
+import { CourseActions } from './course.action';
+import { select } from '@angular-redux/store';
+import { Observable } from 'rxjs';
 
 @Component({
   templateUrl: './course.component.html'
 })
 export class CourseComponent implements OnInit, AfterContentChecked {
-  @Input()
-  course: Course;
-  editCourse: Course = <Course>{};
+  @select('selectedCourse')
+  course$: Observable<Course>;
+
+  editedCourse: Course;
 
   constructor(
     private _courseService: CourseService,
     private _route: ActivatedRoute,
     private _router: Router,
     private _toastService: ToastService,
-    private _modalService: ModalService
+    private _modalService: ModalService,
+    private _courseActions: CourseActions
   ) {}
 
-  private _getCourse() {
-    const id = +this._route.snapshot.params['id'];
-    if (id === 0) {
-      return;
-    }
-    if (this.isAddMode()) {
-      this.course = <Course>{ name: '', topic: 'Web' };
-      this.editCourse = this.course;
-      return;
-    }
-    this._courseService
-      .getCourse(id)
-      .subscribe(course => this._setEditCourse(course));
-  }
-
-  private _setEditCourse(course: Course) {
-    if (course) {
-      this.course = course;
-      this.editCourse = Object.assign({}, this.course);
-    } else {
-      this._gotoCourses();
-    }
-  }
-
   cancel(showToast = true) {
-    this.editCourse = Object.assign({}, this.course);
     if (showToast) {
-      this._toastService.activate(`Cancelled changes to ${this.course.name}`);
+      this._toastService.activate(
+        `Cancelled changes to ${this.editedCourse.name}`
+      );
     }
-
-    this._router.navigate(['courses']);
-  }
-
-  isAddMode() {
-    const id = +this._route.snapshot.params['id'];
-    return isNaN(id);
+    this._gotoCourses();
   }
 
   save() {
-    const course = this.course;
-    if (course.id == null) {
-      this._courseService.addCourse(this.editCourse).subscribe(char => {
-        this._setEditCourse(char);
+    if (this.editedCourse.id == null) {
+      this._courseService.addCourse(this.editedCourse).subscribe(char => {
         this._toastService.activate(`Successfully added ${char.name}`);
         this._gotoCourses();
       });
       return;
     }
-    this._courseService.updateCourse(this.editCourse).subscribe(() => {
-      this._toastService.activate(`Successfully saved ${course.name}`);
+    this._courseService.updateCourse(this.editedCourse).subscribe(() => {
+      this._toastService.activate(
+        `Successfully saved ${this.editedCourse.name}`
+      );
       this._gotoCourses();
     });
   }
 
   delete() {
-    const msg = `Do you want to delete ${this.course.name}?`;
+    const msg = `Do you want to delete ${this.editedCourse.name}?`;
     this._modalService.activate(msg).then(responseOK => {
       if (responseOK) {
         this.cancel(false);
-        this._courseService.deleteCourse(this.course).subscribe(() => {
-          this._toastService.activate(`Deleted ${this.course.name}`);
+        this._courseService.deleteCourse(this.editedCourse).subscribe(() => {
+          this._toastService.activate(`Deleted ${this.editedCourse.name}`);
           this._gotoCourses();
         });
       }
@@ -93,7 +69,15 @@ export class CourseComponent implements OnInit, AfterContentChecked {
   }
 
   ngOnInit() {
-    this._getCourse();
+    const id = +this._route.snapshot.params['id'];
+    this._courseActions.getCourse(id);
+    this.course$.subscribe(course => {
+      if (course) {
+        this.editedCourse = Object.assign({}, course);
+      } else {
+        this._gotoCourses();
+      }
+    });
   }
 
   ngAfterContentChecked() {

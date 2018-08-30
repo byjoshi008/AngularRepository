@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Course } from './course';
-import { IAppState } from '../store';
-import { NgRedux, select } from '@angular-redux/store';
+import { select } from '@angular-redux/store';
 import { Observable } from 'rxjs';
 import { CourseActions } from './course.action';
 
@@ -14,10 +13,7 @@ export class CourseListComponent implements OnInit {
   @select('filteredCourses')
   filteredCourses: Observable<Course>;
 
-  constructor(
-    private ngRedux: NgRedux<IAppState>,
-    private courseActions: CourseActions
-  ) {}
+  constructor(private courseActions: CourseActions) {}
 
   filterChanged(searchText: string) {
     this.courseActions.filterCourses(searchText);
