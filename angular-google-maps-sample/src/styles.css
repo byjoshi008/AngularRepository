@@ -1,0 +1,9 @@
+/* You can add global styles to this file, and also import other style files */
+
+@import '~@anglianwater/component-library-angular/css/style.css';
+html,
+body,
+.page {
+    width: 100%;
+    height: 100%;
+}
