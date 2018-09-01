@@ -5,7 +5,11 @@ import { HomePageComponent } from './home-page/home-page.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
-  { path: 'home', component: HomePageComponent }
+  { path: 'home', component: HomePageComponent },
+  {
+    path: 'event-map',
+    loadChildren: './event-map/event-map.module#EventMapModule'
+  }
 ];
 
 @NgModule({

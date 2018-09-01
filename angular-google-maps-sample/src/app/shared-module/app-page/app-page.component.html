@@ -1,0 +1,17 @@
+<div class="page">
+  <div class="w-100 page-header bg-primary shadow d-flex align-items-center">
+    <div *ngIf="!isHomePage" class="d-flex ml-2 align-items-center">
+      <h4 class="text-white m-0">
+        <em class="fa fa-arrow-left cursor-pointer"></em>
+      </h4>
+      <div class="d-flex flex-column ml-3 flex-grow">
+        <span class="font-small text-white">{{ selectedEvent.event_number }}</span>
+        <span class="font-normal font-weight-medium text-white">{{ selectedEvent.short_text }}</span>
+      </div>
+    </div>
+    <h5 *ngIf="isHomePage" class="w-100 text-white m-0 text-center">{{ appName }}</h5>
+  </div>
+  <div class="page-content w-100">
+    <ng-content></ng-content>
+  </div>
+</div>
