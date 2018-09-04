@@ -5,6 +5,6 @@ import { AppPageComponent } from './app-page/app-page.component';
 @NgModule({
   imports: [CommonModule],
   declarations: [AppPageComponent],
-  exports: [AppPageComponent]
+  exports: [CommonModule, AppPageComponent]
 })
 export class SharedModule {}

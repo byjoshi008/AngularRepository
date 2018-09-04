@@ -16,5 +16,12 @@ export interface IEvent {
 }
 
 export interface ISupplyEvent extends IEvent {
-  supplyLocations: ILocation[];
+  supplyLocations: ISupplyLocation[];
+}
+
+export interface ISupplyLocation extends ILocation {
+  id: string;
+  is_supplied: boolean;
+  supplied_at?: string;
+  supplied_by?: any;
 }

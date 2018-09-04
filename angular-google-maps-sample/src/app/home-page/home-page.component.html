@@ -1,7 +1,7 @@
 <app-page>
   <div class="p-4">
-    <ul class="list-group bg-white shadow col-12 col-md-8 col-lg-6 mx-auto p-0">
-      <li *ngFor="let event of eventList" class="event-item list-group-item cursor-pointer" [routerLink]="'/event-map'">
+    <ul class="list-group bg-white shadow col-12 col-md-8 col-lg-6 mx-auto p-0" *ngIf="eventList$ | async as eventList">
+      <li *ngFor="let event of eventList" class="event-item list-group-item cursor-pointer" (click)="selectEvent(event.id)">
         <div class="d-flex align-items-center justify-content-between">
           <div class="d-flex flex-column">
             <div>

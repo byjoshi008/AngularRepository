@@ -1,3 +1,18 @@
 <app-page>
-  <agm-map class="h-100"></agm-map>
+  <div class="h-100" *ngIf="event">
+    <agm-map class="h-100" [latitude]="event.location.lat" [longitude]="event.location.long" [zoom]="18">
+      <agm-marker *ngFor="let marker of event.supplyLocations" [latitude]="marker.lat" [longitude]="marker.long" [iconUrl]="marker.is_supplied ? iconGreen : iconRed">
+        <agm-info-window>
+          <div class="d-flex flex-column">
+            <p class="text-muted font-small font-weight-medium mb-2">Address</p>
+            <h6>{{marker.location_name}}</h6>
+            <div class="d-flex mt-2">
+              <button *ngIf="!marker.is_supplied" class="btn btn-sm btn-primary mx-auto" (click)="markAsDelivered(marker.id)">Mark as delivered</button>
+              <span *ngIf="marker.is_supplied">Supplied at {{marker.supplied_at | date:'dd/MM/yyyy HH:mm'}}</span>
+            </div>
+          </div>
+        </agm-info-window>
+      </agm-marker>
+    </agm-map>
+  </div>
 </app-page>
