@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { IAppState } from '../../models/app-state.model';
 import { Store, select } from '@ngrx/store';
-import { ISupplyEvent } from '../../models/event.models';
+import { ISupplyEvent, ISupplyLocation } from '../../models/event.models';
 import { takeWhile } from 'rxjs/operators';
 
 import * as fromAppStore from '../../state/app.reducer';
@@ -15,6 +15,9 @@ import * as appActions from '../../state/app.actions';
 export class EventMapPageComponent implements OnInit, OnDestroy {
   componentActive = true;
   event: ISupplyEvent;
+  showSupplyLocationList = false;
+  mapCenter = null;
+  selectedLocation: ISupplyLocation = null;
 
   iconRed = {
     url: 'assets/map-icons/home_marker_red.svg',
@@ -32,22 +35,30 @@ export class EventMapPageComponent implements OnInit, OnDestroy {
     }
   };
 
-  constructor(private store: Store<IAppState>) {}
+  constructor(private store: Store<IAppState>) { }
 
   ngOnInit() {
-    this.store
-      .pipe(
-        select(fromAppStore.getCurrentEvent),
-        takeWhile(() => this.componentActive)
-      )
-      .subscribe(event => (this.event = event));
+    this.store.pipe(
+      select(fromAppStore.getCurrentEvent),
+      takeWhile(() => this.componentActive)
+    ).subscribe(event => {
+      if (event) {
+        this.event = event;
+        this.mapCenter = { lat: event.location.lat, lng: event.location.long };
+      }
+    });
   }
 
   ngOnDestroy() {
     this.componentActive = false;
   }
 
-  markAsDelivered(locationId: string) {
-    this.store.dispatch(new appActions.MarkLocationSupplied(locationId));
+  changeMapCenter(slocation: ISupplyLocation) {
+    this.selectedLocation = slocation;
+    this.mapCenter = { lat: slocation.lat, lng: slocation.long };
+  }
+
+  markAsSupplied(locationId: string) {
+    this.store.dispatch(new appActions.LocationSupplied(locationId));
   }
 }

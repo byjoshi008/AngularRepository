@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';
 import { ISupplyEvent } from './models/event.models';
 
 @Injectable()
 export class AppService {
   private serviceUrl = 'api/events';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   getEvents(): Observable<ISupplyEvent[]> {
     return this.http
@@ -16,16 +16,26 @@ export class AppService {
       .pipe(catchError(this.handleError));
   }
 
+  updateSupplyLocation(event: ISupplyEvent): Observable<any> {
+    const url = `${this.serviceUrl}/${event.id}`;
+    return this.http.put<ISupplyEvent>(
+      url, event, { headers: this.getHeader() })
+      .pipe(
+        map(() => event),
+        catchError(this.handleError)
+      );
+  }
+
+  private getHeader(): HttpHeaders {
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    return headers;
+  }
+
   private handleError(err) {
-    // in a real world app, we may send the server to some remote logging infrastructure
-    // instead of just logging it to the console
     let errorMessage: string;
     if (err.error instanceof ErrorEvent) {
-      // A client-side or network error occurred. Handle it accordingly.
       errorMessage = `An error occurred: ${err.error.message}`;
     } else {
-      // The backend returned an unsuccessful response code.
-      // The response body may contain clues as to what went wrong,
       errorMessage = `Backend returned code ${err.status}: ${err.body.error}`;
     }
     console.error(err);

@@ -38,17 +38,11 @@ function rootReducer(state = initialState, action: AppActions): IAppState {
         currentEventId: action.payload,
         isHomePage: false
       };
-    case AppActionTypes.MarkLocationSupplied:
-      const newState = { ...state };
-      const event = newState.eventList.find(
-        e => e.id === newState.currentEventId
-      );
-      const supplyLocation = event.supplyLocations.find(
-        s => s.id === action.payload
-      );
-      supplyLocation.is_supplied = true;
-      supplyLocation.supplied_at = '2018-09-04T17:00:00';
-      return newState;
+    case AppActionTypes.LocationSuppliedSuccess:
+      return {
+        ...state,
+        eventList: state.eventList.map(e => e.id === action.payload.id ? action.payload : e)
+      };
     default:
       return state;
   }
@@ -57,7 +51,7 @@ function rootReducer(state = initialState, action: AppActions): IAppState {
 function metaReducer(
   reducer: ActionReducer<IAppState>
 ): ActionReducer<IAppState> {
-  return function(state, action: AppActions) {
+  return function (state, action: AppActions) {
     return rootReducer(state, action);
   };
 }

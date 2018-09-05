@@ -6,7 +6,8 @@ export enum AppActionTypes {
   LoadSuccess = '[Event] Load Success',
   LoadFail = '[Event] Load Fail',
   SelectEvent = '[Select Event] Set Current Event',
-  MarkLocationSupplied = '[Mark Location Supplied] Mark location as Supplied'
+  LocationSupplied = '[Mark Location Supplied] Mark location as Supplied',
+  LocationSuppliedSuccess = '[Mark Location Supplied] Mark location as Supplied Success'
 }
 
 export class Load implements Action {
@@ -16,23 +17,28 @@ export class Load implements Action {
 export class LoadSuccess implements Action {
   readonly type = AppActionTypes.LoadSuccess;
 
-  constructor(public payload: ISupplyEvent[]) {}
+  constructor(public payload: ISupplyEvent[]) { }
 }
 
 export class LoadFail implements Action {
   readonly type = AppActionTypes.LoadFail;
 
-  constructor(public payload: string) {}
+  constructor(public payload: string) { }
 }
 
 export class SelectEvent implements Action {
   readonly type = AppActionTypes.SelectEvent;
-  constructor(public payload: string) {}
+  constructor(public payload: string) { }
 }
 
-export class MarkLocationSupplied implements Action {
-  readonly type = AppActionTypes.MarkLocationSupplied;
-  constructor(public payload: string) {}
+export class LocationSupplied implements Action {
+  readonly type = AppActionTypes.LocationSupplied;
+  constructor(public payload: string) { }
+}
+
+export class LocationSuppliedSuccess implements Action {
+  readonly type = AppActionTypes.LocationSuppliedSuccess;
+  constructor(public payload: ISupplyEvent) { }
 }
 
 export type AppActions =
@@ -40,4 +46,5 @@ export type AppActions =
   | LoadSuccess
   | LoadFail
   | SelectEvent
-  | MarkLocationSupplied;
+  | LocationSupplied
+  | LocationSuppliedSuccess;
