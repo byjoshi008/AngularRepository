@@ -2,8 +2,11 @@
 
 # compiled output
 /dist
+*/dist
 /tmp
+*/tmp
 /out-tsc
+*/out-tsc
 
 # dependencies
 /node_modules
@@ -31,9 +34,12 @@
 /coverage
 /libpeerconnection.log
 npm-debug.log
+*/npm-debug.log
 yarn-error.log
+*/yarn-error.log
 testem.log
 /typings
+*/typings
 
 # System Files
 .DS_Store
