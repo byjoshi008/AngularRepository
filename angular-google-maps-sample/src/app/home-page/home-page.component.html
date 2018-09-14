@@ -1,0 +1,23 @@
+<app-page>
+  <div class="p-4">
+    <ul class="list-group bg-white shadow col-12 col-md-8 col-lg-6 mx-auto p-0" *ngIf="eventList$ | async as eventList">
+      <li *ngFor="let event of eventList" class="event-item list-group-item cursor-pointer" (click)="selectEvent(event.id)">
+        <div class="d-flex align-items-center justify-content-between">
+          <div class="d-flex flex-column">
+            <div>
+              <span class="font-small text-muted mr-3">{{event.event_number}}</span>
+            </div>
+            <div class="h4 mt-1">{{event.short_text}}</div>
+            <div class="mt-1">
+              <span class="font-small text-muted mr-2">Reported On:</span>
+              <span class="font-small">{{event.created_at | date:'dd/MM/yyyy HH:mm'}}</span>
+            </div>
+          </div>
+          <div>
+            <em class="fa fa-chevron-circle-right h1 text-secondary"></em>
+          </div>
+        </div>
+      </li>
+    </ul>
+  </div>
+</app-page>

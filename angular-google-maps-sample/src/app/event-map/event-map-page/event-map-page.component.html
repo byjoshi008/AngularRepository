@@ -1,0 +1,29 @@
+<app-page>
+  <div class="h-100 position-relative" *ngIf="event">
+    <agm-map class="h-100" [latitude]="mapCenter.lat" [longitude]="mapCenter.lng" [zoom]="18">
+      <agm-marker *ngFor="let marker of event.supplyLocations" [latitude]="marker.lat" [longitude]="marker.long" [iconUrl]="marker.is_supplied ? iconGreen : iconRed">
+        <agm-info-window>
+          <div class="d-flex flex-column">
+            <p class="text-muted font-small font-weight-medium mb-2">Address</p>
+            <h6>{{marker.location_name}}</h6>
+            <div class="d-flex mt-2">
+              <button *ngIf="!marker.is_supplied" class="btn btn-sm btn-primary mx-auto" (click)="markAsSupplied(marker.id)">Mark
+                as supplied</button>
+              <span *ngIf="marker.is_supplied">Supplied at {{marker.supplied_at | date:'dd/MM/yyyy HH:mm'}}</span>
+            </div>
+          </div>
+        </agm-info-window>
+      </agm-marker>
+    </agm-map>
+    <button *ngIf="!showSupplyLocationList" class="btn btn-lg btn-primary position-absolute supply-location-btn" (click)="showSupplyLocationList = true"><em
+        class="fa fa-bars"></em></button>
+    <div *ngIf="showSupplyLocationList" class="position-absolute bg-white h-100 shadow d-flex flex-column supply-location-panel">
+      <div class="d-flex p-3 justify-content-between alitn-items-center border-bottom">
+        <h5 class="m-0">Supply Locations</h5>
+        <button class="btn btn-sm btn-outline-primary" (click)="showSupplyLocationList = false"><em class="fa fa-times"></em></button>
+      </div>
+      <app-supply-location-item *ngFor="let slocation of event.supplyLocations" [class.selected-location]="selectedLocation === slocation"
+        [supplyLocation]="slocation" (click)="changeMapCenter(slocation)"></app-supply-location-item>
+    </div>
+  </div>
+</app-page>
