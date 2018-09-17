@@ -1,0 +1,6 @@
+<div class="d-flex justify-content-between">
+  <span class="text-muted">Section {{section.id}}</span>
+  <span class="text-muted cursor-pointer h5"><em class="fa fa-times"></em></span>
+</div>
+<inline-text-edit [text]="section.title" [placeholder]="'Enter Section Title'" [inputClass]="'h5'" (textChange)="sectionTitleChange($event)"></inline-text-edit>
+<inline-text-edit [text]="section.description" [placeholder]="'Enter Section Description'" (textChange)="sectionDescriptionChange($event)"></inline-text-edit>

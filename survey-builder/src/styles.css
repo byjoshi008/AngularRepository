@@ -1,7 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 
 @import "~bootstrap/dist/css/bootstrap.min.css";
-@import "~font-awesome/css/font-awesome.min.css";
+@import "~font-awesome/css/font-awesome.css";
 html,
 body {
     height: 100%;
@@ -19,4 +19,24 @@ body {
 
 .cursor-pointer {
     cursor: pointer;
+}
+
+.font-small {
+    font-size: 12px;
+}
+
+.font-normal {
+    font-size: 14px;
+}
+
+.flex-stretch {
+    flex: 1 1 auto !important;
+}
+
+.flex-fix {
+    flex: 0 0 auto !important;
+}
+
+.overflow-auto {
+    overflow: auto;
 }

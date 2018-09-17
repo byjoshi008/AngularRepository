@@ -1,11 +1,14 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { InlineTextEditComponent } from './inline-text-edit/inline-text-edit.component';
 
 @NgModule({
   imports: [
-    CommonModule
+    CommonModule,
+    FormsModule
   ],
-  declarations: [],
-  exports: [CommonModule]
+  declarations: [InlineTextEditComponent],
+  exports: [CommonModule, InlineTextEditComponent, FormsModule]
 })
 export class SharedModule { }

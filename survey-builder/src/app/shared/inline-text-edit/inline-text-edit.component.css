@@ -1,0 +1,25 @@
+.inline-text-edit {
+    border-color: transparent;
+    border-radius: 0;
+    border-width: 1px;
+    border-style: solid;
+    background: transparent;
+}
+
+.inline-text-edit:hover {
+    border-bottom-color: #ddd;
+}
+
+.inline-text-edit:focus,
+.inline-text-edit:active {
+    outline: none;
+    border-bottom-color: #ddd;
+}
+
+.inline-text-edit::placeholder {
+    color: #ddd;
+}
+
+.inline-text-edit:read-only:hover {
+    border-color: transparent;
+}
