@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Store, select } from '@ngrx/store';
+import * as fromActions from '../state/actions/survey.actions';
+import * as fromState from '../state/survey.state';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-survey-list',
@@ -8,8 +12,20 @@ import { Component, OnInit } from '@angular/core';
 export class SurveyListComponent implements OnInit {
 
   surveyList: any;
-  constructor() { }
+  constructor(
+    private readonly store: Store<fromState.State>,
+    private readonly router: Router,
+    private readonly route: ActivatedRoute) { }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.store.dispatch(new fromActions.LoadSurveys());
 
+    this.store.pipe(select(fromState.getSurveys)).subscribe(surveyList => {
+      this.surveyList = surveyList;
+    });
+  }
+
+  gotoEditSurvey(surveyid: string) {
+    this.router.navigate(['./edit-survey', surveyid], { relativeTo: this.route });
+  }
 }

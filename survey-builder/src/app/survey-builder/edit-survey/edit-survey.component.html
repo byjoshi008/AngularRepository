@@ -17,17 +17,17 @@
 
   <div class="d-flex flex-stretch">
     <div class="w-25 border-right d-flex flex-column flex-stretch">
-      <div class="p-2 d-flex justify-content-between border-bottom flex-fit">
-        <span class="h6 m-0">Sections</span>
-        <span class="text-muted cursor-pointer font-normal" (click)="addNewSection()"><em class="fa fa-plus mr-2 text-success"></em>Add
+      <div class="p-2 d-flex justify-content-between border-bottom flex-fit bg-primary">
+        <span class="h6 m-0 text-white">Sections</span>
+        <span class="text-white cursor-pointer font-normal" (click)="addNewSection()"><em class="fa fa-plus mr-2 "></em>Add
           Section</span>
       </div>
       <div class="flex-stretch" class="border-bottom overflow-auto">
-        <app-section-list [sections]="survey.sections" (select)="sectionSelect($event)"></app-section-list>
+        <app-section-list></app-section-list>
       </div>
     </div>
-    <div class="w-75 d-flex flex-column flex-stretch px-3 py-2">
-      <app-section-editor *ngIf="currentSection" [section]="currentSection" (change)="sectionChange()"></app-section-editor>
+    <div class="w-75 flex-stretch px-3 py-2">
+      <app-section-editor></app-section-editor>
     </div>
   </div>
 </div>

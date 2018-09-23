@@ -1,5 +1,8 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { SurveySection } from '../../models/survey.model';
+import { Store, select } from '@ngrx/store';
+import * as state from '../state/survey.state';
+import * as fromAction from '../state/actions';
 
 @Component({
   selector: 'app-section-list',
@@ -8,17 +11,27 @@ import { SurveySection } from '../../models/survey.model';
 })
 export class SectionListComponent implements OnInit {
 
-  @Input() sections: SurveySection[];
-  @Output() select: EventEmitter<SurveySection> = new EventEmitter<SurveySection>();
-  selectedSection: SurveySection;
+  sections: SurveySection[];
+  currentSectionId: number;
 
-  constructor() { }
+  constructor(private readonly store: Store<state.State>) { }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.store.pipe(select(state.getSections)).subscribe(
+      sections => this.sections = sections
+    );
 
-  handleSectionClick(section: SurveySection) {
-    this.selectedSection = section;
-    this.select.emit(section);
+    this.store.pipe(select(state.getCurrentSectionId)).subscribe(
+      sectionid => this.currentSectionId = sectionid
+    );
   }
 
+  handleSectionClick(sectionid: number) {
+    this.store.dispatch(new fromAction.SelectSection(sectionid));
+  }
+
+  deleteSection(event: Event, sectionid: number) {
+    event.stopPropagation();
+    this.store.dispatch(new fromAction.DeleteSection(sectionid));
+  }
 }

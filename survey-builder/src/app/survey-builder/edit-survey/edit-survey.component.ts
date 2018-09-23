@@ -1,6 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewContainerRef, ViewChild, ComponentFactoryResolver } from '@angular/core';
 import { Survey, SurveySection } from '../../models/survey.model';
 import { Location } from '@angular/common';
+import { Store, select } from '@ngrx/store';
+import * as state from '../state/survey.state';
+import * as fromActions from '../state/actions';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-edit-survey',
@@ -11,17 +15,24 @@ export class EditSurveyComponent implements OnInit {
 
   survey: Survey;
   isChanged = false;
-  currentSection: SurveySection;
 
-  constructor(private readonly location: Location) { }
+  constructor(
+    private readonly location: Location,
+    private readonly route: ActivatedRoute,
+    private readonly store: Store<state.State>) { }
 
   ngOnInit() {
-    this.survey = {
-      id: 'new',
-      name: 'Survey Title',
-      description: 'Survey Description',
-      sections: []
-    };
+    this.route.params.subscribe(params => {
+      this.store.dispatch(new fromActions.GetSurvey(params.id));
+    });
+
+    this.store.pipe(select(state.getCurrentSurvey)).subscribe(survey => {
+      this.survey = survey;
+    });
+
+    this.store.pipe(select(state.getSurveyChanged)).subscribe(isChanged => {
+      this.isChanged = isChanged;
+    });
   }
 
   goBack() {
@@ -29,32 +40,16 @@ export class EditSurveyComponent implements OnInit {
   }
 
   addNewSection() {
-    const section: SurveySection = {
-      id: this.survey.sections.length + 1,
-      title: 'New Section',
-      description: '',
-      questions: []
-    };
-    this.survey.sections.push(section);
-    this.currentSection = section;
-  }
-
-  sectionSelect(section: SurveySection) {
-    this.currentSection = section;
+    this.store.dispatch(new fromActions.AddSection());
   }
 
   surveyNameChange(value: string) {
-    this.survey.name = value;
-    this.isChanged = true;
+    this.store.dispatch(
+      new fromActions.SurveyUpdated({ ...this.survey, name: value }));
   }
 
   surveyDescriptionChange(value: string) {
-    this.survey.description = value;
-    this.isChanged = true;
+    this.store.dispatch(
+      new fromActions.SurveyUpdated({ ...this.survey, description: value }));
   }
-
-  sectionChange() {
-    this.isChanged = true;
-  }
-
 }

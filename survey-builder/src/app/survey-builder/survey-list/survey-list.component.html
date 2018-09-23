@@ -1,7 +1,7 @@
 <div class="page">
-  <div *ngIf="surveyList">Display Survey List</div>
-  <div *ngIf="!surveyList" class="d-flex flex-column w-100 h-100 align-items-center justify-content-center">
-    <span class="display-3 text-primary cursor-pointer outline-none" routerLink="./edit-survey"><em class="fa fa-plus-circle"></em></span>
-    <span class="display-4 text-primary cursor-pointer outline-none" routerLink="./edit-survey">Create new survey</span>
+  <div *ngIf="surveyList && surveyList.length > 0">Display Survey List</div>
+  <div *ngIf="!surveyList || surveyList.length <= 0" class="d-flex flex-column w-100 h-100 align-items-center justify-content-center">
+    <span class="display-3 text-primary cursor-pointer outline-none" (click)="gotoEditSurvey('new')"><em class="fa fa-plus-circle"></em></span>
+    <span class="display-4 text-primary cursor-pointer outline-none" (click)="gotoEditSurvey('new')">Create new survey</span>
   </div>
 </div>

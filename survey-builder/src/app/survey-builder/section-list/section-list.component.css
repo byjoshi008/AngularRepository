@@ -5,3 +5,7 @@
 .section-item.selected {
     background: #e8e8e8;
 }
+
+.section-delete-icon:hover {
+    color: red;
+}

@@ -8,7 +8,13 @@ import { InlineTextEditComponent } from './inline-text-edit/inline-text-edit.com
     CommonModule,
     FormsModule
   ],
-  declarations: [InlineTextEditComponent],
-  exports: [CommonModule, InlineTextEditComponent, FormsModule]
+  declarations: [
+    InlineTextEditComponent
+  ],
+  exports: [
+    CommonModule,
+    FormsModule,
+    InlineTextEditComponent
+  ]
 })
 export class SharedModule { }

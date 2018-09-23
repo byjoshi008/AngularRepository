@@ -1,7 +1,12 @@
 <ul *ngIf="sections && sections.length > 0" class="list-group list-group-flush">
-  <li *ngFor="let section of sections" class="list-group-item d-flex flex-column p-2 cursor-pointer section-item"
-    [class.selected]="section === selectedSection" (click)="handleSectionClick(section)">
-    <span class="text-muted font-small">Section {{section.id}}</span>
-    <span class="h6 my-1">{{section.title}}</span>
+  <li *ngFor="let section of sections" class="list-group-item d-flex p-2 cursor-pointer section-item justify-content-between align-items-center"
+    [class.selected]="section.id === currentSectionId" (click)="handleSectionClick(section.id)">
+    <div class="d-flex flex-column">
+      <span class="text-muted font-small">Section {{section.id}}</span>
+      <span class="h6 my-1">{{section.title}}</span>
+    </div>
+    <span class="p-1 section-delete-icon" (click)="deleteSection($event, section.id)">
+      <em class="fa fa-trash-o"></em>
+    </span>
   </li>
 </ul>
