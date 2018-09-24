@@ -6,7 +6,7 @@ export interface SurveyState {
     surveys: Survey[];
     currentSurvey: Survey;
     currentSectionId: number;
-    currentQuestionId: string;
+    currentQuestionId: number;
     isSurveyChanged: boolean;
 }
 
@@ -18,7 +18,7 @@ export const initialState: SurveyState = {
     surveys: [],
     currentSurvey: null,
     currentSectionId: 0,
-    currentQuestionId: null,
+    currentQuestionId: 0,
     isSurveyChanged: false
 };
 

@@ -23,7 +23,8 @@ export function sectionReducer(state = fromState.initialState, action: fromActio
         case fromActions.SectionActionTypes.SelectSection:
             return {
                 ...state,
-                currentSectionId: action.payload
+                currentSectionId: action.payload,
+                currentQuestionId: 0
             };
         case fromActions.SectionActionTypes.SectionUpdated:
             return {
@@ -45,7 +46,7 @@ export function sectionReducer(state = fromState.initialState, action: fromActio
                 ...state,
                 isSurveyChanged: true,
                 currentQuestionId:
-                    action.payload === state.currentSectionId ? null : state.currentQuestionId,
+                    action.payload === state.currentSectionId ? 0 : state.currentQuestionId,
                 currentSectionId:
                     action.payload === state.currentSectionId ? 0 : state.currentSectionId,
                 currentSurvey: {

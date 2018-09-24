@@ -1,13 +1,8 @@
-<div class="d-flex flex-column flex-stretch">
-  <ul *ngIf="questions && questions.length > 0" class="w-100 p-0 border-bottom d-flex flex-fit m-0 question-tabs">
-    <li *ngFor="let question of questions" class="py-2 px-2 cursor-pointer d-flex justify-content-center align-items-center"
-      [ngClass]="{ 'border bg-white text-primary selected': currentQuestion === question}" (click)="selectQuestion(question)"
-      [attr.title]="question.id">
-      <span class="mr-2">{{question.id}}</span>
-      <em *ngIf="isEditable" class="fa fa-times text-muted" (click)="questionRemove($event, question)"></em>
-    </li>
-  </ul>
-  <div *ngIf="currentQuestion" class="flex-stretch p-3">
-    <app-question-editor [question]="currentQuestion"></app-question-editor>
-  </div>
-</div>
+<ul class="w-100 p-0 border-bottom d-flex flex-fit m-0 question-tabs">
+  <li *ngFor="let question of questions" class="py-2 px-2 cursor-pointer d-flex justify-content-center align-items-center"
+    [ngClass]="{ 'border bg-white text-primary selected': currentQuestionId === question.id}" (click)="selectQuestion(question.id)"
+    [attr.title]="'Question '+question.id">
+    <span class="mr-2">Question {{question.id}}</span>
+    <em class="fa fa-times text-muted" (click)="questionRemove($event, question.id)"></em>
+  </li>
+</ul>

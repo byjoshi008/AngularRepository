@@ -1,5 +1,9 @@
-import { Component, OnInit, Input, Output, EventEmitter, HostBinding } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { SurveyQuestion } from '../../models/survey.model';
+import { Store, select } from '@ngrx/store';
+import * as state from '../state/survey.state';
+import { Observable } from 'rxjs';
+import { SelectQuestion, DeleteQuestion } from '../state/actions';
 
 @Component({
   selector: 'app-question-tabs',
@@ -8,30 +12,28 @@ import { SurveyQuestion } from '../../models/survey.model';
 })
 export class QuestionTabsComponent implements OnInit {
 
-  @HostBinding('class') classes = 'd-flex flex-stretch';
+  questions: SurveyQuestion[] = [];
+  currentQuestionId: number;
 
-  @Input() questions: SurveyQuestion[];
-  @Input() isEditable = true;
-  @Output() removeQuestion: EventEmitter<SurveyQuestion> = new EventEmitter<SurveyQuestion>();
+  constructor(private readonly store: Store<state.State>) { }
 
-  currentQuestion: SurveyQuestion;
+  ngOnInit() {
+    this.store.pipe(select(state.getQuestions)).subscribe(
+      questions => this.questions = questions
+    );
 
-  constructor() { }
-
-  ngOnInit() { }
-
-  selectQuestion(question: SurveyQuestion) {
-    if (this.currentQuestion !== question) {
-      this.currentQuestion = question;
-    }
+    this.store.pipe(select(state.getCurrentQuestionId)).subscribe(
+      questionId => this.currentQuestionId = questionId
+    );
   }
 
-  questionRemove(event: Event, question: SurveyQuestion) {
+  selectQuestion(questionId: number) {
+    this.store.dispatch(new SelectQuestion(questionId));
+  }
+
+  questionRemove(event: Event, questionId: number) {
     event.stopPropagation();
-    if (this.currentQuestion === question) {
-      this.currentQuestion = null;
-    }
-    this.removeQuestion.emit(question);
+    this.store.dispatch(new DeleteQuestion(questionId));
   }
 
 }

@@ -1,4 +1,4 @@
-<div *ngIf="section" class="d-flex flex-column">
+<div *ngIf="section" class="w-100 d-flex flex-column flex-stretch">
   <div class="d-flex justify-content-between">
     <span class="text-muted">Section {{section.id}}</span>
     <span class="text-muted cursor-pointer h5" (click)="close()"><em class="fa fa-times"></em></span>
@@ -9,5 +9,10 @@
     <span class="text-muted cursor-pointer" (click)="addQuestion()"><em class="fa fa-plus mr-2 text-success"></em>Add
       Question</span>
   </div>
-  <app-question-tabs [questions]="section.questions" (removeTab)="removeTab($event)"></app-question-tabs>
+  <div *ngIf="section.questions" class="d-flex flex-column flex-stretch">
+    <app-question-tabs></app-question-tabs>
+    <div class="flex-stretch p-3 overflow-auto">
+      <app-question-editor></app-question-editor>
+    </div>
+  </div>
 </div>

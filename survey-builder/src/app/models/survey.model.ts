@@ -22,9 +22,10 @@ export interface SurveySection {
 }
 
 export interface SurveyQuestion {
-    id: string;
+    id: number;
     text: string;
     description: string;
     output: string;
     type: string;
+    attachments: boolean;
 }

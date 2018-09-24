@@ -34,12 +34,6 @@ export class SectionEditorComponent implements OnInit {
   }
 
   addQuestion() {
-    this.section.questions = [...this.section.questions, {
-      id: `Question ${this.section.questions.length + 1}`,
-      text: `Question Text ${this.section.questions.length + 1}`,
-      description: `Question Description ${this.section.questions.length + 1}`,
-      type: '',
-      output: ''
-    }];
+    this.store.dispatch(new fromAction.AddQuestion());
   }
 }

@@ -1,20 +1,25 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { InlineTextEditComponent } from './inline-text-edit/inline-text-edit.component';
+import { CheckboxComponent } from './checkbox/checkbox.component';
 
 @NgModule({
   imports: [
     CommonModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule
   ],
   declarations: [
-    InlineTextEditComponent
+    InlineTextEditComponent,
+    CheckboxComponent
   ],
   exports: [
     CommonModule,
     FormsModule,
-    InlineTextEditComponent
+    ReactiveFormsModule,
+    InlineTextEditComponent,
+    CheckboxComponent
   ]
 })
 export class SharedModule { }
