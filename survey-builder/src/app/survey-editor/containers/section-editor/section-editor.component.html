@@ -1,0 +1,32 @@
+<div *ngIf="section" class="w-100 d-flex flex-column flex-stretch">
+
+  <div *ngIf="!currentQuestion" class="d-flex justify-content-between bg-info px-3 py-1 flex-fix">
+    <span class="font-normal font-weight-medium text-white">Section {{section.id}}</span>
+    <span class="text-white cursor-pointer" (click)="closeSection()"><em class="fa fa-times"></em></span>
+  </div>
+
+  <div *ngIf="currentQuestion" class="d-flex justify-content-between bg-info px-3 py-1 flex-fix">
+    <span class="font-normal font-weight-medium text-white">Section {{section.id}} - Question {{currentQuestion.id}}</span>
+    <span class="text-white cursor-pointer" (click)="closeQuestion()"><em class="fa fa-times"></em></span>
+  </div>
+
+  <div *ngIf="!currentQuestion" class="d-flex flex-column flex-stretch px-3 py-2 overflow-auto">
+    <inline-text-edit [text]="section.title" [placeholder]="'Enter Section Title'" [inputClass]="'font-normal font-weight-medium'"
+      (textChange)="sectionTitleChange($event)"></inline-text-edit>
+    <inline-text-edit [text]="section.description" [placeholder]="'Enter Section Description'" (textChange)="sectionDescriptionChange($event)"></inline-text-edit>
+    <div class="d-flex flex-fix justify-content-between mt-3">
+      <span class="font-normal font-weight-medium">Questions</span>
+      <span class="text-muted cursor-pointer" (click)="addQuestion()"><em class="fa fa-plus mr-2 text-success"></em>Add
+        Question</span>
+    </div>
+    <div *ngIf="section.questions" class="d-flex flex-column flex-stretch py-2">
+      <app-question-list [questions]="section.questions" (questionSelect)="selectQuestion($event)" (questionDelete)="deleteQuestion($event)"
+        (questionOrderChange)="changeQuestionOrder($event)">
+      </app-question-list>
+    </div>
+  </div>
+
+  <div *ngIf="currentQuestion" class="d-flex flex-column flex-stretch px-3 py-2 overflow-auto">
+    <app-question-editor [question]="currentQuestion" (questionUpdate)="updateQuestion($event)"></app-question-editor>
+  </div>
+</div>

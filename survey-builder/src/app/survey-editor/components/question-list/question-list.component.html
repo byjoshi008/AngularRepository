@@ -1,0 +1,11 @@
+<ul class="list-group list-group-flush" dragula="QUESTIONLIST" [dragulaModel]="questions" (dragulaModelChange)="handleQuestionOrderChange($event)">
+  <li *ngFor="let question of questions" class="list-group-item question-item p-2" (click)="handleQuestionSelect(question.id)">
+    <div class="d-flex align-items-center justify-content-between">
+      <div class="question-item-text"><span class="font-weight-medium mr-3">{{question.id}}.</span>{{question.text}}</div>
+      <div class="pl-5">
+        <span (click)="handleQuestionDelete($event, question.id)"><em class="fa fa-trash-o delete-icon"></em></span>
+      </div>
+    </div>
+
+  </li>
+</ul>

@@ -4,7 +4,7 @@ import { NgModule } from '@angular/core';
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { EffectsModule } from '@ngrx/effects';
-import { StoreRouterConnectingModule, RouterStateSerializer } from '@ngrx/router-store';
+import { StoreRouterConnectingModule } from '@ngrx/router-store';
 
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 
@@ -17,11 +17,15 @@ import { environment } from '../environments/environment.prod';
 import { SurveyData } from './data/survey-data';
 import { HttpClientModule } from '@angular/common/http';
 
-import { reducers, metaReducers } from './reducers';
+import { reducers, metaReducers } from './state';
+import { HomePageComponent } from './home-page/home-page.component';
+import { SurveysEffects } from './state/effects/surveys.effect';
+import { SurveyService } from './services/survey.service';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    HomePageComponent
   ],
   imports: [
     BrowserModule,
@@ -30,7 +34,7 @@ import { reducers, metaReducers } from './reducers';
     HttpClientModule,
     HttpClientInMemoryWebApiModule.forRoot(SurveyData),
     StoreModule.forRoot(reducers, { metaReducers }),
-    EffectsModule.forRoot([]),
+    EffectsModule.forRoot([SurveysEffects]),
     StoreRouterConnectingModule.forRoot({
       stateKey: 'router',
     }),
@@ -40,7 +44,7 @@ import { reducers, metaReducers } from './reducers';
       logOnly: environment.production
     })
   ],
-  providers: [],
+  providers: [SurveyService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -20,6 +20,7 @@
     color: #ddd;
 }
 
+.inline-text-edit:read-only,
 .inline-text-edit:read-only:hover {
     border-color: transparent;
 }

@@ -1,8 +1,11 @@
 import { Routes, RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
+import { HomePageComponent } from './home-page/home-page.component';
 
 const routes: Routes = [
-    { path: 'survey-builder', loadChildren: './survey-builder/survey-builder.module#SurveyBuilderModule' }
+    { path: '', redirectTo: '/home', pathMatch: 'full' },
+    { path: 'home', component: HomePageComponent },
+    { path: 'edit-survey', loadChildren: './survey-editor/survey-editor.module#SurveyEditorModule' }
 ];
 
 @NgModule({
