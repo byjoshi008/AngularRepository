@@ -10,7 +10,8 @@ export class SurveyData implements InMemoryDbService {
                 id: 1,
                 name: 'Test Data',
                 description: 'Test Description',
-                sections: []
+                sections: [],
+                is_complete: false
             }
         ];
         return { surveys };

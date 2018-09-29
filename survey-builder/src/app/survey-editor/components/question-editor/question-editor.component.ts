@@ -14,23 +14,28 @@ export class QuestionEditorComponent implements OnInit {
 
   ngOnInit() { }
 
-  questionTextChange(value: string, question: SurveyQuestion) {
-    this.questionUpdate.emit({ ...question, text: value });
+  questionTextChange(value: string) {
+    this.question = { ...this.question, text: value };
+    this.questionUpdate.emit(this.question);
   }
 
-  questionDescriptionChange(value: string, question: SurveyQuestion) {
-    this.questionUpdate.emit({ ...question, description: value });
+  questionDescriptionChange(value: string) {
+    this.question = { ...this.question, description: value };
+    this.questionUpdate.emit(this.question);
   }
 
-  questionOutputChange(value: string, question: SurveyQuestion) {
-    this.questionUpdate.emit({ ...question, output: value });
+  questionOutputChange(value: string) {
+    this.question = { ...this.question, output: value };
+    this.questionUpdate.emit(this.question);
   }
 
-  questionAttachmentChange(value: boolean, question: SurveyQuestion) {
-    this.questionUpdate.emit({ ...question, attachments: value });
+  questionAttachmentChange(value: boolean) {
+    this.question = { ...this.question, attachments: value };
+    this.questionUpdate.emit(this.question);
   }
 
-  questionTypeChange(value: string, question: SurveyQuestion) {
-    this.questionUpdate.emit({ ...question, type: value });
+  questionTypeChange(value: string) {
+    this.question = { ...this.question, type: value };
+    this.questionUpdate.emit(this.question);
   }
 }

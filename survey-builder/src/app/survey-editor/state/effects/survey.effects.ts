@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Location } from '@angular/common';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { SurveyService } from '../../../services/survey.service';
 import { Action } from '@ngrx/store';
@@ -10,7 +11,11 @@ import * as fromRootActions from '../../../state/actions';
 
 @Injectable()
 export class SurveyEditorEffects {
-    constructor(private actions$: Actions, private surveyService: SurveyService) { }
+    constructor(
+        private actions$: Actions,
+        private surveyService: SurveyService,
+        private readonly location: Location
+    ) { }
 
     @Effect()
     getSurvey$: Observable<Action> = this.actions$.pipe(
@@ -22,7 +27,8 @@ export class SurveyEditorEffects {
                     id: 0,
                     name: 'Survey Title',
                     description: '',
-                    sections: []
+                    sections: [],
+                    is_complete: false
                 });
             } else {
                 survey$ = this.surveyService.getSurvey(action.payload);
@@ -44,6 +50,9 @@ export class SurveyEditorEffects {
                 survey$ = this.surveyService.createSurvey(action.payload);
             } else {
                 survey$ = this.surveyService.updateSurvey(action.payload);
+            }
+            if (action.exitFlag) {
+                this.location.back();
             }
             return survey$.pipe(
                 map((survey: Survey) => new fromActions.SaveSurveySuccess(survey)),

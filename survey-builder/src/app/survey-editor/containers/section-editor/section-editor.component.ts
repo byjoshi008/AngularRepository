@@ -35,11 +35,13 @@ export class SectionEditorComponent implements OnInit {
   }
 
   sectionTitleChange(value: string) {
-    this.store.dispatch(new fromAction.SectionUpdated({ ...this.section, title: value }));
+    this.section = { ...this.section, title: value };
+    this.store.dispatch(new fromAction.SectionUpdated(this.section));
   }
 
   sectionDescriptionChange(value: string) {
-    this.store.dispatch(new fromAction.SectionUpdated({ ...this.section, description: value }));
+    this.section = { ...this.section, title: value };
+    this.store.dispatch(new fromAction.SectionUpdated(this.section));
   }
 
   closeSection() {

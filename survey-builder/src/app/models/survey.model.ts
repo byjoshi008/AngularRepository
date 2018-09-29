@@ -2,6 +2,7 @@ export interface Survey {
     id?: number;
     name: string;
     description: string;
+    is_complete: boolean;
     // version: number;
     // is_active: boolean;
     // is_released: boolean;
@@ -28,4 +29,10 @@ export interface SurveyQuestion {
     output: string;
     type: string;
     attachments: boolean;
+}
+
+export interface SurveyValidation {
+    section?: number;
+    question?: number;
+    message: string;
 }

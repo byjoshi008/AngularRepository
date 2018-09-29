@@ -1,19 +1,19 @@
 <div *ngIf="question" class="d-flex flex-column">
   <div class="text-muted font-small">Question Text</div>
-  <inline-text-edit [text]="question.text" [placeholder]="'Enter question here'" inputClass="h5" (textChange)="questionTextChange($event, question)"></inline-text-edit>
+  <inline-text-edit [text]="question.text" [placeholder]="'Enter question here'" inputClass="h5" (textChange)="questionTextChange($event)"></inline-text-edit>
   <div class="my-2"></div>
   <div class="text-muted font-small">Additional Details</div>
-  <inline-text-edit [text]="question.description" [placeholder]="'Enter additional details here'" (textChange)="questionDescriptionChange($event, question)"></inline-text-edit>
+  <inline-text-edit [text]="question.description" [placeholder]="'Enter additional details here'" (textChange)="questionDescriptionChange($event)"></inline-text-edit>
   <div class="my-2"></div>
   <div class="text-muted font-small">Output Name</div>
   <inline-text-edit [text]="question.output" [placeholder]="'Enter question output name'" [isEditable]="false"
-    (textChange)="questionOutputChange($event, question)"></inline-text-edit>
+    (textChange)="questionOutputChange($event)"></inline-text-edit>
   <div class="my-2"></div>
   <div class="text-muted font-small">Question Attachments</div>
-  <check-box text="Allow Attachments" class="my-1" text="Allow Attachments" [isChecked]="question.attachments" (select)="questionAttachmentChange($event, question)"></check-box>
+  <check-box text="Allow Attachments" class="my-1" text="Allow Attachments" [isChecked]="question.attachments" (select)="questionAttachmentChange($event)"></check-box>
   <div class="my-2"></div>
   <div class="text-muted font-small">Question Type</div>
-  <select class="form-control select-input question-type-select" [(ngModel)]="question.type" (change)="questionTypeChange($event.target.value, question)">
+  <select class="form-control select-input question-type-select" [(ngModel)]="question.type" (change)="questionTypeChange($event.target.value)">
     <option value=""></option>
     <option value="Text">Text</option>
   </select>

@@ -4,15 +4,37 @@
   <div *ngIf="survey" class="d-flex flex-column flex-stretch">
 
     <div class="d-flex flex-column px-3 py-2 border-bottom bg-light flex-fix">
-      <div class="d-flex">
+      <div class="d-flex justify-content-between align-items-center">
         <inline-text-edit class="w-50" [text]="survey.name" [placeholder]="'Enter Survey Title'" [inputClass]="'font-normal font-weight-medium'"
           (textChange)="surveyNameChange($event)"></inline-text-edit>
+        <span *ngIf="showValidations && validationErrors && validationErrors.length > 0" class="text-danger font-weight-medium cursor-pointer"
+          (click)="showErrorPanel = true">
+          <em class="fa fa-exclamation-circle mr-1 h5"></em>{{validationErrors.length}}
+        </span>
       </div>
 
       <div class="d-flex justify-content-between align-items-center">
         <inline-text-edit class="flex-stretch mr-3" [text]="survey.description" [placeholder]="'Enter Survey Description'"
           (textChange)="surveyDescriptionChange($event)"></inline-text-edit>
-        <button class="btn btn-primary btn-sm" [class.disabled]="!isChanged" (click)="saveSurvey()"><em class="fa fa-floppy-o mr-2"></em>Save</button>
+        <div class="btn-group" dropdown [isDisabled]="!isChanged">
+          <button type="button" class="btn btn-primary btn-sm pl-2 pr-3" [class.disabled]="!isChanged" [disabled]="!isChanged"
+            (click)="saveSurvey(false, true)">
+            <em class="fa fa-floppy-o mr-2"></em>Save &amp; Close
+          </button>
+          <button id="button-split" type="button" dropdownToggle class="btn btn-primary btn-sm dropdown-toggle dropdown-toggle-split px-2"
+            aria-controls="dropdown-split">
+          </button>
+          <ul id="dropdown-split" *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="button-split">
+            <li role="menuitem" class="save-dropdown-item cursor-pointer py-2 pl-2 pr-1">
+              <span (click)="saveSurvey(false, false)"><em class="fa fa-floppy-o mr-2"></em>Save</span>
+            </li>
+            <li role="menuitem" class="save-dropdown-item cursor-pointer py-2 pl-2 pr-1">
+              <span (click)="saveSurvey(true, true)">
+                <em class="fa fa-floppy-o mr-2"></em>Save &amp; Complete
+              </span>
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
 
@@ -36,4 +58,16 @@
 
   </div>
 
+</div>
+
+<div *ngIf="showErrorPanel" class="position-fixed error-panel p-3 d-flex flex-column overflow-auto">
+  <div class="d-flex justify-content-between align-items-center mb-2">
+    <span class="font-normal font-weight-medium">Validation Errors</span>
+    <span class="h5 cursor-pointer" (click)="showErrorPanel = false"><em class="fa fa-times"></em></span>
+  </div>
+  <ul class="list-group list-group-flush">
+    <li *ngFor="let item of validationErrors" class="list-group-item p-1 border-0">
+      <div class="alert alert-danger m-0 p-2">{{item.message}}</div>
+    </li>
+  </ul>
 </div>

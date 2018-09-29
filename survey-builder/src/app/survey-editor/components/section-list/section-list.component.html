@@ -4,7 +4,8 @@
     [class.selected]="section.id === currentSectionId" (click)="handleSectionSelect(section.id)">
     <div class="d-flex flex-column">
       <span class="text-muted font-small">Section {{section.id}}</span>
-      <span class="h6 my-1">{{section.title}}</span>
+      <span *ngIf="section.title" class="h6 my-1">{{section.title}}</span>
+      <span *ngIf="!section.title" class="h6 my-1 font-light">Missing Section Title</span>
     </div>
     <span class="p-1 section-delete-icon" (click)="handleSectionDelete($event, section.id)">
       <em class="fa fa-trash-o"></em>

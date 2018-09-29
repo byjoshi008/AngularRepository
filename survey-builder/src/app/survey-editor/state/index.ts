@@ -1,4 +1,4 @@
-import { Survey } from '../../models/survey.model';
+import { Survey, SurveyValidation } from '../../models/survey.model';
 import * as fromRoot from '../../state';
 import * as fromActions from './actions';
 import { surveyReducer } from './reducers/survey.reducer';

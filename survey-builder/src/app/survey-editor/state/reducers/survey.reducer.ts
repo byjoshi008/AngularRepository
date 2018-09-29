@@ -23,6 +23,12 @@ export function surveyReducer(state, action: fromActions.SurveyActions): SurveyS
                 survey: action.payload,
                 isSurveyChanged: false
             };
+        case fromActions.SurveyActionTypes.ResetSurvey:
+            return {
+                ...state,
+                survey: null,
+                isSurveyChanged: false
+            };
         default:
             return state;
     }

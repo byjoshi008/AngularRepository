@@ -14,6 +14,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { SurveyEditorEffects } from './state/effects/survey.effects';
 import { QuestionListComponent } from './components/question-list/question-list.component';
 import { DragulaModule } from 'ng2-dragula';
+import { BsDropdownModule } from 'ngx-bootstrap';
 
 @NgModule({
   imports: [
@@ -21,7 +22,8 @@ import { DragulaModule } from 'ng2-dragula';
     SurveyEditorRoutingModule,
     StoreModule.forFeature('survey', reducer),
     EffectsModule.forFeature([SurveyEditorEffects]),
-    DragulaModule.forRoot()
+    DragulaModule.forRoot(),
+    BsDropdownModule.forRoot()
   ],
   declarations: [
     EditSurveyComponent,
