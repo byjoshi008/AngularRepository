@@ -4,6 +4,7 @@ import { storeFreeze } from 'ngrx-store-freeze';
 
 import * as fromReducers from './reducers';
 import { environment } from '../../environments/environment';
+import { Survey } from '../models/survey.model';
 
 export interface State {
     error: fromReducers.ErrorState;
@@ -40,4 +41,13 @@ export const getErrorMessage = createSelector(
 export const getSurveys = createSelector(
     getSurveysState,
     fromReducers.getSurveys
+);
+export const getCurrentSurveyId = createSelector(
+    getSurveysState,
+    fromReducers.getCurrentSurveyId
+);
+export const getSurvey = createSelector(
+    getSurveysState,
+    getCurrentSurveyId,
+    (state, surveyId: any) => { console.log(state); return state.surveys.find(x => x.id === surveyId); }
 );

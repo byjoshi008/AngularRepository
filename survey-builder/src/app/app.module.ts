@@ -11,26 +11,28 @@ import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { AppRoutingModule } from './app-routing.module';
 
 import { AppComponent } from './app.component';
-import { SharedModule } from './shared/shared.module';
 
 import { environment } from '../environments/environment.prod';
 import { SurveyData } from './data/survey-data';
 import { HttpClientModule } from '@angular/common/http';
 
 import { reducers, metaReducers } from './state';
-import { HomePageComponent } from './home-page/home-page.component';
 import { SurveysEffects } from './state/effects/surveys.effect';
 import { SurveyService } from './services/survey.service';
+import { SurveyEditorModule } from './survey-editor/survey-editor.module';
+import * as components from './components';
+import * as containers from './containers';
 
 @NgModule({
   declarations: [
     AppComponent,
-    HomePageComponent
+    components.HeaderBarComponent,
+    containers.HomePageComponent,
+    containers.SurveyEditorComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    SharedModule,
     HttpClientModule,
     HttpClientInMemoryWebApiModule.forRoot(SurveyData),
     StoreModule.forRoot(reducers, { metaReducers }),
@@ -42,7 +44,8 @@ import { SurveyService } from './services/survey.service';
       name: 'Survey App Devtools',
       maxAge: 25,
       logOnly: environment.production
-    })
+    }),
+    SurveyEditorModule
   ],
   providers: [SurveyService],
   bootstrap: [AppComponent]

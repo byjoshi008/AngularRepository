@@ -49,17 +49,6 @@ body {
     flex: 0 0 auto !important;
 }
 
-.select-input {
-    border-color: transparent;
-    border-bottom-color: #ddd;
-}
-
-.select-input:focus,
-.select-input:active {
-    outline: none;
-    border-bottom-color: #ddd;
-}
-
 .overflow-auto {
     overflow: auto;
 }

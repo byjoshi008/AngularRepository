@@ -1,0 +1,15 @@
+<div class="page d-flex flex-column bg-light">
+  <header-bar [showBackBtn]="false" class="px-3 pt-2 pb-1"></header-bar>
+  <div class="d-flex flex-stretch justify-content-center align-items-center">
+    <div class="big-button d-flex flex-column mx-4 p-5 bg-primary cursor-pointer justify-content-center align-items-center"
+      (click)="gotoSurveyEditor()">
+      <h1 class="text-white"><em class="fa fa-pencil-square-o"></em></h1>
+      <span class="font-normal font-weight-medium text-white">Survey Editor</span>
+    </div>
+    <div class="big-button d-flex flex-column mx-5 p-5 bg-primary cursor-pointer justify-content-center align-items-center"
+      (click)="gotoTakeSurvey()">
+      <h1 class="text-white"><em class="fa fa-list-alt"></em></h1>
+      <span class="font-normal font-weight-medium text-white">Take Survey</span>
+    </div>
+  </div>
+</div>

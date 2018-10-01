@@ -21,4 +21,24 @@ export class SurveysEffects {
             )
         )
     );
+
+    @Effect()
+    saveSurvey$: Observable<Action> = this.actions$.pipe(
+        ofType(fromRootActions.SurveysActionTypes.SaveSurvey),
+        mergeMap((action: fromRootActions.SaveSurvey) => {
+            let survey$: Observable<Survey>;
+            let isNew = false;
+            if (action.payload.id === 0) {
+                isNew = true;
+                survey$ = this.surveyService.createSurvey(action.payload);
+            } else {
+                survey$ = this.surveyService.updateSurvey(action.payload);
+            }
+            return survey$.pipe(
+                map((survey: Survey) => new fromRootActions.SaveSurveySuccess(survey, isNew)),
+                catchError(err => of(new fromRootActions.SetErrorMessage(err)))
+            );
+        }
+        )
+    );
 }

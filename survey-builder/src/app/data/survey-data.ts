@@ -8,10 +8,17 @@ export class SurveyData implements InMemoryDbService {
         const surveys: Survey[] = [
             {
                 id: 1,
-                name: 'Test Data',
-                description: 'Test Description',
+                name: 'First Survey',
+                description: 'Test Description 1',
                 sections: [],
                 is_complete: false
+            },
+            {
+                id: 2,
+                name: 'Second Survey',
+                description: 'Test Description 2',
+                sections: [],
+                is_complete: true
             }
         ];
         return { surveys };

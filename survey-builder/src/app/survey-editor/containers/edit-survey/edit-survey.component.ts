@@ -1,9 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { Survey, SurveyValidation } from '../../../models/survey.model';
-import { Store, select } from '@ngrx/store';
-import * as fromState from '../../state';
-import * as fromActions from '../../state/actions';
-import { ActivatedRoute } from '@angular/router';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Survey, SurveyValidation, SurveySection } from '../../../models/survey.model';
 
 @Component({
   selector: 'app-edit-survey',
@@ -12,46 +8,28 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class EditSurveyComponent implements OnInit {
 
-  survey: Survey;
+  @Input() survey: Survey;
+  @Output() save: EventEmitter<boolean> = new EventEmitter<boolean>();
   isChanged = false;
   currentSectionId: number;
   showValidations = false;
   showErrorPanel = false;
+  currentSection: SurveySection;
 
   validationErrors: SurveyValidation[] = null;
 
-  constructor(
-    private readonly route: ActivatedRoute,
-    private readonly store: Store<fromState.State>) { }
+  constructor() { }
 
-  ngOnInit() {
-    this.store.dispatch(new fromActions.ResetSurvey());
-
-    this.route.params.subscribe(params => {
-      this.store.dispatch(new fromActions.GetSurvey(params.id));
-    });
-
-    this.store.pipe(select(fromState.getSurvey)).subscribe(survey => {
-      this.survey = survey;
-    });
-
-    this.store.pipe(select(fromState.getCurrentSectionId)).subscribe(
-      sectionid => this.currentSectionId = sectionid
-    );
-
-    this.store.pipe(select(fromState.getSurveyChanged)).subscribe(isChanged => {
-      this.isChanged = isChanged;
-    });
-  }
+  ngOnInit() { }
 
   surveyNameChange(value: string) {
-    this.store.dispatch(
-      new fromActions.SurveyUpdated({ ...this.survey, name: value }));
+    this.survey.name = value;
+    this.isChanged = true;
   }
 
   surveyDescriptionChange(value: string) {
-    this.store.dispatch(
-      new fromActions.SurveyUpdated({ ...this.survey, description: value }));
+    this.survey.description = value;
+    this.isChanged = true;
   }
 
   saveSurvey(completeFlag: boolean, exitFlag: boolean) {
@@ -60,24 +38,54 @@ export class EditSurveyComponent implements OnInit {
       saveFlag = this.validateSurvey();
     }
     if (saveFlag) {
-      this.store.dispatch(new fromActions.SaveSurvey({ ...this.survey, is_complete: completeFlag }, exitFlag));
+      this.survey.is_complete = completeFlag;
+      this.save.emit(exitFlag);
     }
   }
 
   addNewSection() {
-    this.store.dispatch(new fromActions.AddSection());
+    const sectionId = this.survey.sections.length + 1;
+    const newSection = {
+      id: sectionId,
+      title: 'New Section',
+      description: '',
+      questions: []
+    };
+    this.survey.sections = [...this.survey.sections, newSection];
+    this.currentSection = newSection;
+    this.currentSectionId = sectionId;
+    this.isChanged = true;
   }
 
   selectSection(sectionId) {
-    this.store.dispatch(new fromActions.SelectSection(sectionId));
+    this.currentSection = this.survey.sections.find(x => x.id === sectionId);
+    this.currentSectionId = sectionId;
   }
 
   deleteSection(sectionId) {
-    this.store.dispatch(new fromActions.DeleteSection(sectionId));
+    if (sectionId === this.currentSectionId) {
+      this.currentSection = null;
+    }
+    this.survey.sections = this.survey.sections.filter(x => x.id !== sectionId);
+    this.isChanged = true;
   }
 
   changeSectionOrder(sections) {
-    this.store.dispatch(new fromActions.ChangeSectionOrder(sections));
+    this.currentSectionId = this.currentSectionId
+      ? sections.findIndex(x => x.id === this.currentSectionId) + 1
+      : null;
+    sections.forEach((x, index) => x.id = index + 1);
+    this.survey.sections = sections;
+    this.isChanged = true;
+  }
+
+  updateSection() {
+    this.isChanged = true;
+  }
+
+  closeSectionEditor() {
+    this.currentSection = null;
+    this.currentSectionId = null;
   }
 
   private validateSurvey(): boolean {

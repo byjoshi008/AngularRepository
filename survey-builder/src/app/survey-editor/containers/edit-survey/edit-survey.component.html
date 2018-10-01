@@ -1,6 +1,4 @@
-<div class="page d-flex flex-column">
-  <header-bar class="px-3 pt-2 bg-light" [showBackBtn]="true"></header-bar>
-
+<div class="d-flex flex-column flex-stretch">
   <div *ngIf="survey" class="d-flex flex-column flex-stretch">
 
     <div class="d-flex flex-column px-3 py-2 border-bottom bg-light flex-fix">
@@ -52,7 +50,8 @@
         </div>
       </div>
       <div class="w-75 flex-stretch d-flex">
-        <app-section-editor class="flex-stretch d-flex"></app-section-editor>
+        <app-section-editor class="flex-stretch d-flex" [section]="currentSection" (close)="closeSectionEditor()"
+          (update)="updateSection()"></app-section-editor>
       </div>
     </div>
 
