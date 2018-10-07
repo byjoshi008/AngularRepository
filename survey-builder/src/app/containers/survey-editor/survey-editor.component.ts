@@ -59,7 +59,6 @@ export class SurveyEditorComponent implements OnInit {
   }
 
   saveSurvey(exitFlag) {
-    console.log(this.survey);
     this.store.dispatch(new SaveSurvey({ ...this.survey }));
     if (exitFlag) {
       this.location.back();

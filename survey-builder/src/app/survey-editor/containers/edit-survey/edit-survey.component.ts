@@ -1,5 +1,6 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { Survey, SurveyValidation, SurveySection } from '../../../models/survey.model';
+import { Component, OnInit, Input, Output, EventEmitter, ViewChild } from '@angular/core';
+import { Survey, SurveyValidation, SurveySection, SurveyQuestion } from '../../../models/survey.model';
+import { SectionEditorComponent } from '../section-editor/section-editor.component';
 
 @Component({
   selector: 'app-edit-survey',
@@ -10,6 +11,8 @@ export class EditSurveyComponent implements OnInit {
 
   @Input() survey: Survey;
   @Output() save: EventEmitter<boolean> = new EventEmitter<boolean>();
+  @ViewChild('sectionEditor') sectionEditor: SectionEditorComponent;
+
   isChanged = false;
   currentSectionId: number;
   showValidations = false;
@@ -54,12 +57,14 @@ export class EditSurveyComponent implements OnInit {
     this.survey.sections = [...this.survey.sections, newSection];
     this.currentSection = newSection;
     this.currentSectionId = sectionId;
+    this.sectionEditor.currentQuestion = null;
     this.isChanged = true;
   }
 
   selectSection(sectionId) {
     this.currentSection = this.survey.sections.find(x => x.id === sectionId);
     this.currentSectionId = sectionId;
+    this.sectionEditor.currentQuestion = null;
   }
 
   deleteSection(sectionId) {
@@ -88,23 +93,83 @@ export class EditSurveyComponent implements OnInit {
     this.currentSectionId = null;
   }
 
+  gotoError(item: SurveyValidation) {
+    if (item.section) {
+      this.currentSectionId = item.section;
+      this.currentSection = this.survey.sections.find(x => x.id === item.section);
+      if (item.question) {
+        this.sectionEditor.currentQuestion = this.currentSection.questions.find(x => x.id === item.question);
+      } else {
+        this.sectionEditor.currentQuestion = null;
+      }
+    }
+    this.showErrorPanel = false;
+  }
+
   private validateSurvey(): boolean {
-    const validationErrors: SurveyValidation[] = [];
-    const sections = this.survey.sections;
+    let surveyErrors: SurveyValidation[] = [];
 
     if (!this.survey.name) {
-      validationErrors.push({ message: 'Survey title is not provided' });
+      surveyErrors.push({ message: 'Survey title is not provided' });
     }
-    if (!sections || sections.length <= 0) {
-      validationErrors.push({ message: 'No section is added to the survey.' });
+    if (!this.survey.sections || this.survey.sections.length <= 0) {
+      surveyErrors.push({ message: 'No section is added to the survey' });
+    } else {
+      surveyErrors = surveyErrors.concat(this.validateSections());
     }
 
-    if (validationErrors.length === 0) {
+    if (surveyErrors.length === 0) {
       return true;
     }
-    this.validationErrors = validationErrors;
+
+    this.validationErrors = surveyErrors;
     this.showValidations = true;
     return false;
+  }
+
+  private validateSections(): SurveyValidation[] {
+    let sectionErrors: SurveyValidation[] = [];
+    const sections = this.survey.sections;
+
+    sections.forEach(section => {
+      if (!section.title) {
+        sectionErrors.push({
+          section: section.id,
+          message: `Section ${section.id} - Title not provided`
+        });
+      }
+
+      if (!section.questions || section.questions.length <= 0) {
+        sectionErrors.push({
+          section: section.id,
+          message: `Section ${section.id} - No question is added to the section`
+        });
+      } else {
+        sectionErrors = sectionErrors.concat(this.validateQuestions(section));
+      }
+    });
+    return sectionErrors;
+  }
+
+  private validateQuestions(section: SurveySection): SurveyValidation[] {
+    const questionErrors: SurveyValidation[] = [];
+    section.questions.forEach(question => {
+      if (!question.text) {
+        questionErrors.push({
+          section: section.id,
+          question: question.id,
+          message: `Section ${section.id}, Question ${question.id} - Question text not provided`
+        });
+      }
+      if (!question.type) {
+        questionErrors.push({
+          section: section.id,
+          question: question.id,
+          message: `Section ${section.id}, Question ${question.id} - Question type is not selected`
+        });
+      }
+    });
+    return questionErrors;
   }
 
 }
