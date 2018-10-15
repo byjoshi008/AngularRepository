@@ -10,7 +10,7 @@ export class SectionEditorComponent implements OnInit {
 
   @Input() section: SurveySection;
   @Output() close: EventEmitter<void> = new EventEmitter<void>();
-  @Output() update: EventEmitter<void> = new EventEmitter<void>();
+  @Output() update: EventEmitter<SurveySection> = new EventEmitter<SurveySection>();
 
   currentQuestion: SurveyQuestion;
 
@@ -19,13 +19,13 @@ export class SectionEditorComponent implements OnInit {
   ngOnInit() { }
 
   sectionTitleChange(value: string) {
-    this.section.title = value;
-    this.update.emit();
+    const section = { ...this.section, title: value };
+    this.update.emit(section);
   }
 
   sectionDescriptionChange(value: string) {
-    this.section.description = value;
-    this.update.emit();
+    const section = { ...this.section, description: value };
+    this.update.emit(section);
   }
 
   closeSection() {
@@ -44,11 +44,12 @@ export class SectionEditorComponent implements OnInit {
       description: '',
       type: '',
       output: `question${this.section.id}_${questionId}`,
-      attachments: false
+      attachments: false,
+      mandatory: true
     };
-    this.section.questions = [...this.section.questions, newQuestion];
+    const section = { ...this.section, questions: [...this.section.questions, newQuestion] };
     this.currentQuestion = newQuestion;
-    this.update.emit();
+    this.update.emit(section);
   }
 
   selectQuestion(questionId: number) {
@@ -59,18 +60,22 @@ export class SectionEditorComponent implements OnInit {
     if (this.currentQuestion && this.currentQuestion.id === questionId) {
       this.currentQuestion = null;
     }
-    this.section.questions = this.section.questions.filter(x => x.id !== questionId);
-    this.update.emit();
+    const section = { ...this.section, questions: this.section.questions.filter(x => x.id !== questionId) };
+    this.update.emit(section);
   }
 
   changeQuestionOrder(questions: SurveyQuestion[]) {
-    questions.forEach((x, index) => x.id = index + 1);
-    this.section.questions = questions;
-    this.update.emit();
+    const newQuestions = questions.map((x, index) => ({ ...x, id: index + 1 }));
+    const section = { ...this.section, questions: newQuestions };
+    this.section = section;
+    this.update.emit(section);
   }
 
   updateQuestion(question: SurveyQuestion) {
-    this.section.questions = this.section.questions.map(x => x.id === question.id ? question : x);
-    this.update.emit();
+    const section = {
+      ...this.section,
+      questions: this.section.questions.map(x => x.id === question.id ? question : x)
+    };
+    this.update.emit(section);
   }
 }

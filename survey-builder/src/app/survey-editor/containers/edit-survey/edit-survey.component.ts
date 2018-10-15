@@ -62,7 +62,8 @@ export class EditSurveyComponent implements OnInit {
   }
 
   selectSection(sectionId) {
-    this.currentSection = this.survey.sections.find(x => x.id === sectionId);
+    const section = this.survey.sections.find(x => x.id === sectionId);
+    this.currentSection = { ...section };
     this.currentSectionId = sectionId;
     this.sectionEditor.currentQuestion = null;
   }
@@ -79,13 +80,14 @@ export class EditSurveyComponent implements OnInit {
     this.currentSectionId = this.currentSectionId
       ? sections.findIndex(x => x.id === this.currentSectionId) + 1
       : null;
-    sections.forEach((x, index) => x.id = index + 1);
-    this.survey.sections = sections;
+    const newSections = sections.map((x, index) => ({ ...x, id: index + 1 }));
+    this.survey.sections = newSections;
     this.isChanged = true;
   }
 
-  updateSection() {
+  updateSection(section: SurveySection) {
     this.isChanged = true;
+    this.survey.sections = this.survey.sections.map(x => x.id === section.id ? section : x);
   }
 
   closeSectionEditor() {

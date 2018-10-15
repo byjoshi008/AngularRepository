@@ -50,13 +50,11 @@
         </div>
       </div>
       <div class="w-75 flex-stretch d-flex">
-        <app-section-editor #sectionEditor class="flex-stretch d-flex" [section]="currentSection" (close)="closeSectionEditor()"
-          (update)="updateSection()"></app-section-editor>
+        <app-section-editor #sectionEditor class="w-100 flex-stretch d-flex" [section]="currentSection" (close)="closeSectionEditor()"
+          (update)="updateSection($event)"></app-section-editor>
       </div>
     </div>
-
   </div>
-
 </div>
 
 <div *ngIf="showErrorPanel" class="position-fixed error-panel p-3 d-flex flex-column overflow-auto">

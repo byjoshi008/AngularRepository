@@ -11,9 +11,16 @@
   </div>
 
   <div *ngIf="!currentQuestion" class="d-flex flex-column flex-stretch px-3 py-2 overflow-auto">
-    <inline-text-edit [text]="section.title" [placeholder]="'Enter Section Title'" [inputClass]="'font-normal font-weight-medium'"
+    <!-- <inline-text-edit [text]="section.title" [placeholder]="'Enter Section Title'" [inputClass]="'font-normal font-weight-medium'"
       (textChange)="sectionTitleChange($event)"></inline-text-edit>
-    <inline-text-edit [text]="section.description" [placeholder]="'Enter Section Description'" (textChange)="sectionDescriptionChange($event)"></inline-text-edit>
+    <inline-text-edit [text]="section.description" [placeholder]="'Enter Section Description'" (textChange)="sectionDescriptionChange($event)"></inline-text-edit> -->
+    <div class="text-muted font-small">Section Title</div>
+    <textarea class="form-control font-weight-medium" rows="2" [value]="section.title" [placeholder]="'Enter Section Title'"
+      (change)="sectionTitleChange($event.target.value)"></textarea>
+    <div class="my-2"></div>
+    <div class="text-muted font-small">Description</div>
+    <textarea class="form-control" rows="3" [value]="section.description" [placeholder]="'Enter Section Description here'"
+      (change)="sectionDescriptionChange($event.target.value)"></textarea>
     <div class="d-flex flex-fix justify-content-between mt-3">
       <span class="font-normal font-weight-medium">Questions</span>
       <span class="text-muted cursor-pointer" (click)="addQuestion()"><em class="fa fa-plus mr-2 text-success"></em>Add

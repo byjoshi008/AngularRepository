@@ -20,6 +20,7 @@ export class QuestionEditorComponent implements OnInit {
   }
 
   questionDescriptionChange(value: string) {
+    console.log(value);
     this.question = { ...this.question, description: value };
     this.questionUpdate.emit(this.question);
   }
@@ -36,6 +37,16 @@ export class QuestionEditorComponent implements OnInit {
 
   questionTypeChange(value: string) {
     this.question = { ...this.question, type: value };
+    this.questionUpdate.emit(this.question);
+  }
+
+  questionMandatoryChange(value: boolean) {
+    this.question = { ...this.question, mandatory: value };
+    this.questionUpdate.emit(this.question);
+  }
+
+  questionErrorMessageChange(value: string) {
+    this.question = { ...this.question, error_message: value };
     this.questionUpdate.emit(this.question);
   }
 }

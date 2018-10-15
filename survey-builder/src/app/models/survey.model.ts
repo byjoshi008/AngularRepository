@@ -29,6 +29,8 @@ export interface SurveyQuestion {
     output: string;
     type: string;
     attachments: boolean;
+    mandatory?: boolean;
+    error_message?: string;
 }
 
 export interface SurveyValidation {

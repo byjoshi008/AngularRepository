@@ -1,14 +1,4 @@
-.question-type-select {
+.question-type-select,
+.question-output {
     width: 200px;
-}
-
-.select-input {
-    border-color: transparent;
-    border-bottom-color: #ddd;
-}
-
-.select-input:focus,
-.select-input:active {
-    outline: none;
-    border-bottom-color: #ddd;
 }
