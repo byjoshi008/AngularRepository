@@ -76,12 +76,22 @@ export class EditSurveyComponent implements OnInit {
     this.isChanged = true;
   }
 
-  changeSectionOrder(sections) {
+  changeSectionOrder(sections: SurveySection[]) {
     this.currentSectionId = this.currentSectionId
       ? sections.findIndex(x => x.id === this.currentSectionId) + 1
       : null;
-    const newSections = sections.map((x, index) => ({ ...x, id: index + 1 }));
+    const newSections = sections.map((x, index) => ({
+      ...x,
+      id: index + 1,
+      questions: x.questions.map(q => ({
+        ...q,
+        output: q.output.startsWith('question') && q.output.endsWith(`_${q.id}`)
+          ? `question${index + 1}_${q.id}`
+          : q.output
+      }))
+    }));
     this.survey.sections = newSections;
+    this.currentSection = this.survey.sections.find(x => x.id === this.currentSectionId);
     this.isChanged = true;
   }
 
