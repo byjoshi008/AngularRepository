@@ -1,0 +1,19 @@
+<div class="d-flex flex-column flex-stretch py-3 bg-light overflow-auto">
+  <div class="d-flex flex-column p-3 col-12 col-sm-10 col-md-8 col-lg-6 mx-auto shadow bg-white">
+    <div class="d-flex flex-column justify-content-center align-items-center">
+      <span *ngIf="!survey" class="h4 text-muted">No survey is available to start</span>
+      <ng-container *ngIf="survey">
+        <span class="h2 my-5">{{survey.name}}</span>
+        <div class="mb-2 d-flex justify-content-center align-items-center">
+          <span class="h4 text-muted mr-3">Total Questions:</span>
+          <span class="h4">{{getTotalQuestions()}}</span>
+        </div>
+        <div class="mb-2 d-flex justify-content-center align-items-center">
+          <span class="h4 text-muted mr-3">Total Sections:</span>
+          <span class="h4">{{survey.sections.length}}</span>
+        </div>
+        <button class="btn btn-primary btn-lg my-5" (click)="startSurvey()">Start Survey</button>
+      </ng-container>
+    </div>
+  </div>
+</div>

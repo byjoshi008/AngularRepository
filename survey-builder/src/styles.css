@@ -3,54 +3,58 @@
 @import "~bootstrap/dist/css/bootstrap.min.css";
 @import "~font-awesome/css/font-awesome.css";
 * {
-    font-size: 14px;
+  font-size: 14px;
 }
 
 html,
 body {
-    height: 100%;
-    width: 100%;
+  height: 100%;
+  width: 100%;
 }
 
 .page {
-    width: 100%;
-    height: 100%;
+  width: 100%;
+  height: 100%;
 }
 
 .outline-none {
-    outline: none;
+  outline: none;
 }
 
 .cursor-pointer {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .font-small {
-    font-size: 12px;
+  font-size: 12px;
 }
 
 .font-normal {
-    font-size: 16px;
+  font-size: 16px;
 }
 
 .font-light {
-    color: #ccc;
+  color: #ccc;
 }
 
 .font-weight-medium {
-    font-weight: 500;
+  font-weight: 500;
 }
 
 .flex-stretch {
-    flex: 1 1 auto !important;
+  flex: 1 1 auto !important;
 }
 
 .flex-fix {
-    flex: 0 0 auto !important;
+  flex: 0 0 auto !important;
 }
 
 .overflow-auto {
-    overflow: auto;
+  overflow: auto;
+}
+
+.shadow {
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.3);
 }
 
 /******************************************************************************/
@@ -62,34 +66,34 @@ body {
 /* in-flight clone */
 
 .gu-mirror {
-    position: fixed !important;
-    margin: 0 !important;
-    z-index: 9999 !important;
-    opacity: 0.8;
-    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=80)";
-    filter: alpha(opacity=80);
-    pointer-events: none;
+  position: fixed !important;
+  margin: 0 !important;
+  z-index: 9999 !important;
+  opacity: 0.8;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=80)";
+  filter: alpha(opacity=80);
+  pointer-events: none;
 }
 
 /* high-performance display:none; helper */
 
 .gu-hide {
-    left: -9999px !important;
+  left: -9999px !important;
 }
 
 /* added to mirrorContainer (default = body) while dragging */
 
 .gu-unselectable {
-    -webkit-user-select: none !important;
-    -moz-user-select: none !important;
-    -ms-user-select: none !important;
-    user-select: none !important;
+  -webkit-user-select: none !important;
+  -moz-user-select: none !important;
+  -ms-user-select: none !important;
+  user-select: none !important;
 }
 
 /* added to the source element while its mirror is dragged */
 
 .gu-transit {
-    opacity: 0.2;
-    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=20)";
-    filter: alpha(opacity=20);
+  opacity: 0.2;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=20)";
+  filter: alpha(opacity=20);
 }

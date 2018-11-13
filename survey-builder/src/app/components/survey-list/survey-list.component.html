@@ -1,0 +1,17 @@
+<div class="page d-flex flex-column">
+  <div class="d-flex flex-column flex-stretch px-2 py-2">
+    <div class="d-flex px-2 pb-2">
+      <div class="h5">Surveys</div>
+    </div>
+    <div *ngIf="surveyList" class="w-100 float-left">
+      <div *ngFor="let survey of surveyList" class="p-2 col-6 col-sm-4 col-md-3 float-left d-flex" style="height: 100px;">
+        <div class="border flex-stretch cursor-pointer" (click)="startSurvey(survey.id)">
+          {{survey.name}}
+        </div>
+      </div>
+    </div>
+    <div *ngIf="!surveyList" class="d-flex flex-column flex-stretch justify-content-center align-items-center">
+      <span class="h3 font-light pb-3">There is no survey available.</span>
+    </div>
+  </div>
+</div>
