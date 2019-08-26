@@ -1,0 +1,29 @@
+.aw-checkbox label input[type='checkbox'] {
+  display: none;
+}
+.aw-checkbox label span:before {
+  content: '';
+  border: 2px solid #0087c7;
+  display: inline-block;
+  vertical-align: middle;
+  width: 20px;
+  height: 20px;
+  padding: 0px;
+  margin-right: 10px;
+  text-align: center;
+  border-radius: 2px;
+  line-height: 16px;
+  margin-top: -3px;
+}
+.aw-checkbox-white label span:before {
+  border: 2px solid white;
+}
+
+.aw-checkbox label input[type='checkbox']:checked + span:before {
+  content: '\f00c';
+  font-family: 'FontAwesome';
+  color: #0087c7;
+}
+.aw-checkbox-white label input[type='checkbox']:checked + span:before {
+  background-color: #fff;
+}

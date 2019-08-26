@@ -1,0 +1,9 @@
+<div>
+  <label *ngIf="label" [ngClass]="{'text-white': type === 'light' }" class="w-100 font-weight-medium">{{label}}</label>
+  <div class='aw-checkbox' [ngClass]="{'aw-checkbox-white': type === 'light' }">
+    <label class="m-0">
+      <input type="checkbox" [checked]="isChecked" (change)="onChange()">
+      <span [ngClass]="{'text-white': type === 'light' }">{{text}}</span>
+    </label>
+  </div>
+</div>

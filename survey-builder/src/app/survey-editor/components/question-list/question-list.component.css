@@ -1,0 +1,28 @@
+.question-item {
+    cursor: pointer;
+    background-color: #eee;
+    border: none;
+    margin-bottom: 2px;
+}
+
+.question-item:hover {
+    background-color: #bdbdbd;
+}
+
+.question-item-text {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.question-item .delete-icon {
+    display: none;
+}
+
+.question-item:hover .delete-icon {
+    display: block;
+}
+
+.delete-icon:hover {
+    color: red;
+}

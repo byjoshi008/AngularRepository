@@ -1,0 +1,14 @@
+<ul *ngIf="sections && sections.length > 0" class="list-group list-group-flush" dragula="SECTIONLIST" [dragulaModel]="sections"
+  (dragulaModelChange)="handleSectionOrderChange($event)">
+  <li *ngFor="let section of sections" class="list-group-item d-flex py-1 px-3 cursor-pointer section-item justify-content-between align-items-center"
+    [class.selected]="section.id === currentSectionId" (click)="handleSectionSelect(section.id)">
+    <div class="d-flex flex-column">
+      <span class="text-muted font-small">Section {{section.id}}</span>
+      <span *ngIf="section.title" class="h6 my-1">{{section.title}}</span>
+      <span *ngIf="!section.title" class="h6 my-1 font-light">Missing Section Title</span>
+    </div>
+    <span class="p-1 section-delete-icon" (click)="handleSectionDelete($event, section.id)">
+      <em class="fa fa-trash-o"></em>
+    </span>
+  </li>
+</ul>

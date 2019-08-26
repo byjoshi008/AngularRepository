@@ -1,0 +1,14 @@
+<div class="d-flex p-4 flex-column">
+  <div class="d-flex align-items-center">
+    <button class="btn btn-primary" (click)="startVideo()">{{videoBtnText}}</button>
+    <video #inputVideo></video>
+    <canvas #outputVideo></canvas>
+  </div>
+  <br>
+  <input type="file" (change)="handleFileChange($event)" />
+  <br>
+  <div class="d-flex">
+    <img #inputImg [src]="imageSrc" class="mr-3" width="200" height="200" alt="No Image" />
+    <canvas #outputImg></canvas>
+  </div>
+</div>

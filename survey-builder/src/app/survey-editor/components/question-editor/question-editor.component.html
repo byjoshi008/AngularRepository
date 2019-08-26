@@ -1,0 +1,31 @@
+<div *ngIf="question" class="d-flex flex-column mb-4">
+  <div class="text-muted font-small">Question Text</div>
+  <textarea class="form-control h5" rows="2" [value]="question.text" [placeholder]="'Enter question here'" (change)="questionTextChange($event.target.value)"></textarea>
+  <div class="my-2"></div>
+  <div class="text-muted font-small">Additional Details</div>
+  <textarea class="form-control" rows="3" [value]="question.description" [placeholder]="'Enter additional details here'"
+    (change)="questionDescriptionChange($event.target.value)"></textarea>
+  <div class="my-2"></div>
+  <div class="text-muted font-small">Output Name</div>
+  <input class="form-control question-output" [value]="question.output" [placeholder]="'Enter question output name'"
+    readonly="readonly" (change)="questionOutputChange($event.target.value)">
+  <div class="my-2"></div>
+  <div class="text-muted font-small">Question Type</div>
+  <select class="form-control select-input question-type-select" [(ngModel)]="question.type" (change)="questionTypeChange($event.target.value)">
+    <option value=""></option>
+    <option value="Text">Text</option>
+  </select>
+  <div class="my-2"></div>
+  <div class="text-muted font-small">Question Attachments</div>
+  <check-box class="my-1" text="Allow Attachments" [isChecked]="question.attachments" (select)="questionAttachmentChange($event)"></check-box>
+  <div class="my-2"></div>
+  <div class="text-muted font-small">Question Mandatory</div>
+  <check-box class="my-1" text="Mandatory" [isChecked]="question.mandatory" (select)="questionMandatoryChange($event)"></check-box>
+  <ng-container *ngIf="question.mandatory">
+    <div class="my-2"></div>
+    <div class="text-muted font-small">Question Validation Error Message</div>
+    <input class="form-control" [value]="question.error_message || ''" [placeholder]="'Enter validation error message here'"
+      (change)="questionErrorMessageChange($event.target.value)">
+  </ng-container>
+
+</div>
