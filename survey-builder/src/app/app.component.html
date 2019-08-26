@@ -1,1 +1,4 @@
-<router-outlet></router-outlet>
+<div class="page d-flex flex-column">
+  <header-bar [showBackBtn]="!appService.isHomePage" class="px-3 pt-2 pb-1 bg-light"></header-bar>
+  <router-outlet></router-outlet>
+</div>

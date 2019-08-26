@@ -65,7 +65,13 @@ export class SectionEditorComponent implements OnInit {
   }
 
   changeQuestionOrder(questions: SurveyQuestion[]) {
-    const newQuestions = questions.map((x, index) => ({ ...x, id: index + 1 }));
+    const newQuestions = questions.map((x, index) => ({
+      ...x,
+      id: index + 1,
+      output: x.output.startsWith(`question${this.section.id}_`)
+        ? `question${this.section.id}_${index + 1}`
+        : x.output
+    }));
     const section = { ...this.section, questions: newQuestions };
     this.section = section;
     this.update.emit(section);

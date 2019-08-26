@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostBinding } from '@angular/core';
 import { Router } from '@angular/router';
+import { AppService } from 'src/app/services/app.service';
 
 @Component({
   selector: 'app-home-page',
@@ -7,14 +8,17 @@ import { Router } from '@angular/router';
   styleUrls: ['./home-page.component.css']
 })
 export class HomePageComponent implements OnInit {
-
   constructor(private readonly router: Router) { }
 
-  ngOnInit() { }
+  ngOnInit() {
+
+  }
 
   gotoSurveyEditor() {
     this.router.navigate(['/survey-editor']);
   }
 
-  gotoTakeSurvey() { }
+  gotoTakeSurvey() {
+    this.router.navigate(['/surveys']);
+  }
 }

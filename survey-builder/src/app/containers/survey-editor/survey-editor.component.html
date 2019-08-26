@@ -1,32 +1,28 @@
-<div class="page d-flex flex-column">
-  <ng-container *ngIf="isEditorHomePage">
-    <header-bar [showBackBtn]="true" class="px-3 pt-2 pb-1"></header-bar>
-    <div class="d-flex flex-column flex-stretch">
-      <div class="d-flex flex-column flex-stretch px-2 py-1">
-        <div *ngIf="surveyList" class="d-flex justify-content-between px-2 pb-2">
-          <div class="h5">Surveys</div>
+<ng-container *ngIf="isEditorHomePage">
+  <div class="d-flex flex-column flex-stretch">
+    <div class="d-flex flex-column flex-stretch px-2 py-2">
+      <div *ngIf="surveyList" class="d-flex justify-content-between px-2 pb-2">
+        <div class="h5">Surveys</div>
+        <button class="btn btn-primary btn-sm" (click)="gotoEditSurvey('new')"><em class="fa fa-plus mr-2"></em>Create
+          New Survey</button>
+      </div>
+      <div class="d-flex flex-stretch">
+        <div *ngIf="surveyList" class="w-100 float-left">
+          <div *ngFor="let survey of surveyList" class="p-2 col-6 col-sm-4 col-md-3 float-left d-flex" style="height: 100px;">
+            <div class="border flex-stretch cursor-pointer" (click)="gotoEditSurvey(survey.id)">
+              {{survey.name}}
+            </div>
+          </div>
+        </div>
+        <div *ngIf="!surveyList" class="d-flex flex-column flex-stretch justify-content-center align-items-center">
+          <span class="h3 font-light pb-3">There is no survey created.</span>
           <button class="btn btn-primary btn-sm" (click)="gotoEditSurvey('new')"><em class="fa fa-plus mr-2"></em>Create
             New Survey</button>
         </div>
-        <div class="d-flex flex-stretch">
-          <div *ngIf="surveyList" class="w-100 float-left">
-            <div *ngFor="let survey of surveyList" class="p-2 col-6 col-sm-4 col-md-3 float-left d-flex" style="height: 100px;">
-              <div class="border flex-stretch cursor-pointer" (click)="gotoEditSurvey(survey.id)">
-                {{survey.name}}
-              </div>
-            </div>
-          </div>
-          <div *ngIf="!surveyList" class="d-flex flex-column flex-stretch justify-content-center align-items-center">
-            <span class="h3 font-light pb-3">There is no survey created.</span>
-            <button class="btn btn-primary btn-sm" (click)="gotoEditSurvey('new')"><em class="fa fa-plus mr-2"></em>Create
-              New Survey</button>
-          </div>
-        </div>
       </div>
     </div>
-  </ng-container>
-  <ng-container *ngIf="!isEditorHomePage">
-    <header-bar [showBackBtn]="true" class="px-3 pt-2 pb-1 bg-light"></header-bar>
-    <app-edit-survey class="d-flex flex-column flex-stretch" [survey]="survey" (save)="saveSurvey($event)"></app-edit-survey>
-  </ng-container>
-</div>
+  </div>
+</ng-container>
+<ng-container *ngIf="!isEditorHomePage">
+  <app-edit-survey class="d-flex flex-column flex-stretch" [survey]="survey" (save)="saveSurvey($event)"></app-edit-survey>
+</ng-container>

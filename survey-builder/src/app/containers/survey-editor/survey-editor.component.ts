@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostBinding } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { Store, select } from '@ngrx/store';
 import * as fromState from '../../state';
 import { LoadSurveys, SaveSurvey } from '../../state/actions';
 import { Survey } from '../../models/survey.model';
+import { AppService } from 'src/app/services/app.service';
 
 @Component({
   selector: 'app-survey-editor',
@@ -12,7 +13,6 @@ import { Survey } from '../../models/survey.model';
   styleUrls: ['./survey-editor.component.css']
 })
 export class SurveyEditorComponent implements OnInit {
-
   surveyList: Survey[];
   isEditorHomePage: boolean;
   survey: Survey;
@@ -24,6 +24,7 @@ export class SurveyEditorComponent implements OnInit {
     private readonly store: Store<fromState.State>) { }
 
   ngOnInit() {
+
     if (this.router.url.includes('survey-editor')) {
       this.store.dispatch(new LoadSurveys());
       this.store.pipe(select(fromState.getSurveys)).subscribe(surveys => this.surveyList = surveys);
