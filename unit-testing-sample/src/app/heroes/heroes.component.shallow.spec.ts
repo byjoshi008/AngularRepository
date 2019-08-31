@@ -40,7 +40,4 @@ describe('Heroes Component (Shallow Tests)', () => {
 
     expect(fixture.componentInstance.heroes.length).toBe(3);
   });
-
-
-
 });
