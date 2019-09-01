@@ -64,11 +64,24 @@ describe('Heroes Component (Deep Tests)', () => {
       const heroComponentDEs = fixture.debugElement.queryAll(By.directive(HeroComponent));
 
       // (heroComponentDEs[0].componentInstance as HeroComponent).delete.emit(undefined);
-      // heroComponentDEs[0].query(By.css('button')).triggerEventHandler('click', { stopPropagation: () => { } });
-      heroComponentDEs[0].triggerEventHandler('delete', null);
+      heroComponentDEs[0].query(By.css('button')).triggerEventHandler('click', { stopPropagation: () => { } });
+      // heroComponentDEs[0].triggerEventHandler('delete', null);
 
       expect(fixture.componentInstance.delete).toHaveBeenCalledWith(HEROES[0]);
     });
+
+  it('should not add a hero to hero list when add button is clicked with blank name', () => {
+    mockHeroService.getHeroes.and.returnValue(of(HEROES));
+    fixture.detectChanges();
+    const addButton = fixture.debugElement.queryAll(By.css('button'))[0];
+    const inputElement = fixture.debugElement.query(By.css('input')).nativeElement;
+
+    inputElement.value = '';
+    addButton.triggerEventHandler('click', null);
+    fixture.detectChanges();
+
+    expect(fixture.componentInstance.heroes.length).toEqual(3);
+  });
 
   it('should add a new hero to hero list when add button is clicked', () => {
     mockHeroService.getHeroes.and.returnValue(of(HEROES));
